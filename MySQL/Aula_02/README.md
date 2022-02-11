@@ -2,7 +2,7 @@
 
 
 
-## Atividade 1
+## Ex 1
 
 Crie um banco de dados para um serviço de RH de uma empresa, onde o sistema
 trabalhará com as informações dos funcionaries desta empresa.
@@ -17,7 +17,7 @@ coloque no seu GitHuB pessoal e compartilhe esta atividade.
 
 
 
-## Atividade 2
+## Ex 2
 
 Crie um banco de dados para um e commerce, onde o sistema trabalhará com as
 informações dos produtos deste ecommerce.
@@ -32,7 +32,7 @@ coloque no seu GitHuB pessoal e compartilhe esta atividade.
 
 
 
-## Atividade 3
+## Ex 3
 
 Crie um banco de dados para um registro de uma escola, onde o sistema trabalhará com as
 informações dos estudantes deste registro dessa escola.
