@@ -55,18 +55,21 @@ public class ProdutoController {
 	// postProduto  
 	@PostMapping
 	public ResponseEntity<Produto> postProduto(@Valid @RequestBody Produto produto) {
-		if (categoriaRepository.existsById(produto.getCategoria().getId()))
-			return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
-		return ResponseEntity.notFound().build();
+		return categoriaRepository.findById(produto.getCategoria().getId())
+				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto)))
+				.orElse(ResponseEntity.badRequest().build());
 	}
 	
 	// putProduto  
 	@PutMapping
 	public ResponseEntity<Produto> putProduto(@Valid @RequestBody Produto produto) {
-		if (categoriaRepository.existsById(produto.getCategoria().getId())) 
-			return ResponseEntity.ok(produtoRepository.save(produto));
-			return ResponseEntity.notFound().build();
+		if (produtoRepository.existsById(produto.getId())) {
+			return categoriaRepository.findById(produto.getCategoria().getId())
+			.map (resposta -> ResponseEntity.status(HttpStatus.NO_CONTENT).body(produtoRepository.save(produto)))
+			.orElse (ResponseEntity.badRequest().build());
 		}
+	return ResponseEntity.notFound().build();
+	}
 	
 	// deleteProduto  
 	@DeleteMapping("/{id}")
@@ -79,8 +82,6 @@ public class ProdutoController {
 	
 	//Filtro preco ordem crescente
 	
-	
-	//
 	
 	
 	

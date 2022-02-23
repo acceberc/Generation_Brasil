@@ -10,6 +10,6 @@ import com.generation.gengames.model.Produto;
 public interface ProdutoRepository extends JpaRepository <Produto, Long>{
 	List<Produto> findAllByTituloContainingIgnoreCase(String titulo);
 	
-	public List <Produto> findByValorGreaterThanOrderByValor (BigDecimal valor);	
-	public List <Produto> findByValorLessThanOrderByValorDesc(BigDecimal valor);
+	public List <Produto> findByPrecoGreaterThanOrderByPreco (BigDecimal valor);	
+	public List <Produto> findByPrecoLessThanOrderByPrecoDesc(BigDecimal valor);
 }

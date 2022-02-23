@@ -8,9 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -31,9 +31,10 @@ public class Produto {
 	@Size(max = 500, message = "O atributo texto deve conter no máximo 500 caracteres!")
 	private String texto;
 
-	@NotBlank(message = "O atributo valor é obrigatório")
+	@NotNull
+	@Positive
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	private BigDecimal valor;
+	private BigDecimal preco;
 
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
@@ -71,12 +72,14 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
-	public BigDecimal getValor() {
-		return valor;
+	public BigDecimal getPreco() {
+		return preco;
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
 	}
+
+	
 
 }
