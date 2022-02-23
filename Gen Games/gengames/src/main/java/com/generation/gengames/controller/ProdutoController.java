@@ -74,6 +74,11 @@ public class ProdutoController {
 			produtoRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}).orElse(ResponseEntity.notFound().build());
-
 	}
+	
+	//Filtro preco
+	
+	
+	
+	
 }

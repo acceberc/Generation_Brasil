@@ -26,6 +26,9 @@ public class Produto {
 	@Size(max = 500, message = "O atributo texto deve conter no máximo 500 caracteres!")
 	private String texto;
 	
+	@NotBlank(message="O atributo título é obrigatório")
+	private double preco;
+	
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
 	private Categoria categoria;
@@ -60,6 +63,14 @@ public class Produto {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		this.preco = preco;
 	}
 	
 	
