@@ -1,5 +1,6 @@
 package com.generation.gengames.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -28,39 +29,38 @@ public class ProdutoController {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
+
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-	
-	// findAllProduto 
+
+	// findAllProduto
 	@GetMapping
-	public ResponseEntity<List<Produto>> getAll() { 
-		return ResponseEntity.ok(produtoRepository.findAll()); 
+	public ResponseEntity<List<Produto>> getAll() {
+		return ResponseEntity.ok(produtoRepository.findAll());
 	}
-	
-	// findByIDProduto 
-	@GetMapping("/{id}") 
-	public ResponseEntity<Produto> getById(@PathVariable Long id) { 
-		return produtoRepository.findById(id)
-				.map(resposta -> ResponseEntity.ok(resposta)) 
+
+	// findByIDProduto
+	@GetMapping("/{id}")
+	public ResponseEntity<Produto> getById(@PathVariable Long id) {
+		return produtoRepository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
 				.orElse(ResponseEntity.notFound().build());
 	}
-	
-	// findByDescricaoTitulo 
+
+	// findByDescricaoTitulo
 	@GetMapping("/titulo/{titulo}")
 	public ResponseEntity<List<Produto>> getByTitulo(@PathVariable String titulo) {
 		return ResponseEntity.ok(produtoRepository.findAllByTituloContainingIgnoreCase(titulo));
 	}
-	
-	// postProduto  
+
+	// postProduto
 	@PostMapping
 	public ResponseEntity<Produto> postProduto(@Valid @RequestBody Produto produto) {
 		return categoriaRepository.findById(produto.getCategoria().getId())
 				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto)))
 				.orElse(ResponseEntity.badRequest().build());
 	}
-	
-	// putProduto  
+
+	// putProduto
 	@PutMapping
 	public ResponseEntity<Produto> putProduto(@Valid @RequestBody Produto produto) {
 		if (produtoRepository.existsById(produto.getId())) {
@@ -70,8 +70,8 @@ public class ProdutoController {
 		}
 	return ResponseEntity.notFound().build();
 	}
-	
-	// deleteProduto  
+
+	// deleteProduto
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteProduto(@PathVariable Long id) {
 		return produtoRepository.findById(id).map(resposta -> {
@@ -79,12 +79,18 @@ public class ProdutoController {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}).orElse(ResponseEntity.notFound().build());
 	}
+
+	// Filtro preco ordem crescente
+	@GetMapping("/maiorpreco/{preco}")
+	public ResponseEntity<List<Produto>> getPrecoMaiorQue(@PathVariable BigDecimal preco) {
+		return ResponseEntity.ok(produtoRepository.findByPrecoGreaterThanOrderByPreco(preco));
+	}
 	
-	//Filtro preco ordem crescente
-	
-	
-	
-	
+	// Filtro preco ordem crescente
+		@GetMapping("/menorpreco/{preco}")
+		public ResponseEntity<List<Produto>> getPrecoMenorQue(@PathVariable BigDecimal preco) {
+			return ResponseEntity.ok(produtoRepository.findByPrecoLessThanOrderByPrecoDesc(preco));
+		}
 	
 	
 }
