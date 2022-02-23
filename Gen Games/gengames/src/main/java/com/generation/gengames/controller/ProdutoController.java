@@ -39,9 +39,10 @@ public class ProdutoController {
 	}
 	
 	// findByIDProduto 
-	@GetMapping("/{id}") // será uma variavel de caminho. ex: /postagens/'id'
-	public ResponseEntity<Produto> getById(@PathVariable Long id) { // optional
-		return produtoRepository.findById(id).map(resposta -> ResponseEntity.ok(resposta)) // lambda
+	@GetMapping("/{id}") 
+	public ResponseEntity<Produto> getById(@PathVariable Long id) { 
+		return produtoRepository.findById(id)
+				.map(resposta -> ResponseEntity.ok(resposta)) 
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
@@ -53,7 +54,7 @@ public class ProdutoController {
 	
 	// postProduto  
 	@PostMapping
-	public ResponseEntity<Produto> postPostagem(@Valid @RequestBody Produto produto) {
+	public ResponseEntity<Produto> postProduto(@Valid @RequestBody Produto produto) {
 		if (categoriaRepository.existsById(produto.getCategoria().getId()))
 			return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
 		return ResponseEntity.notFound().build();
@@ -61,7 +62,7 @@ public class ProdutoController {
 	
 	// putProduto  
 	@PutMapping
-	public ResponseEntity<Produto> putPostagem(@Valid @RequestBody Produto produto) {
+	public ResponseEntity<Produto> putProduto(@Valid @RequestBody Produto produto) {
 		if (categoriaRepository.existsById(produto.getCategoria().getId())) 
 			return ResponseEntity.ok(produtoRepository.save(produto));
 			return ResponseEntity.notFound().build();
@@ -69,14 +70,18 @@ public class ProdutoController {
 	
 	// deleteProduto  
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deletePostagem(@PathVariable Long id) {
+	public ResponseEntity<?> deleteProduto(@PathVariable Long id) {
 		return produtoRepository.findById(id).map(resposta -> {
 			produtoRepository.deleteById(id);
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}).orElse(ResponseEntity.notFound().build());
 	}
 	
-	//Filtro preco
+	//Filtro preco ordem crescente
+	
+	
+	//
+	
 	
 	
 	
