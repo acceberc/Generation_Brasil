@@ -55,29 +55,31 @@ public class ProdutoController {
 	// postProduto
 	@PostMapping
 	public ResponseEntity<Produto> postProduto(@Valid @RequestBody Produto produto) {
-		return categoriaRepository.findById(produto.getCategoria().getId())
-				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto)))
-				.orElse(ResponseEntity.badRequest().build());
+		if(categoriaRepository.existsById(produto.getCategoria().getId()))
+		return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
+		
+		return ResponseEntity.notFound().build();
 	}
 
 	// putProduto
 	@PutMapping
 	public ResponseEntity<Produto> putProduto(@Valid @RequestBody Produto produto) {
-		if (produtoRepository.existsById(produto.getId())) {
-			return categoriaRepository.findById(produto.getCategoria().getId())
+		if(categoriaRepository.existsById(produto.getCategoria().getId())) {
+			return produtoRepository.findById(produto.getId())
 					.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto)))
-					.orElse(ResponseEntity.badRequest().build());
+					.orElse(ResponseEntity.notFound().build());
 		}
 		return ResponseEntity.notFound().build();
 	}
 
 	// deleteProduto
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteProduto(@PathVariable Long id) {
+	public ResponseEntity<Object> deleteProduto(@PathVariable Long id) {
 		return produtoRepository.findById(id).map(resposta -> {
-			produtoRepository.deleteById(id);
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		}).orElse(ResponseEntity.notFound().build());
+				produtoRepository.deleteById(id);
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();})
+				.orElse(ResponseEntity.notFound().build());
+				
 	}
 
 	// Filtro preco ordem crescente
