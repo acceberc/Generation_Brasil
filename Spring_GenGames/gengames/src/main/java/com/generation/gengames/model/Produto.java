@@ -2,6 +2,7 @@ package com.generation.gengames.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,9 @@ public class Produto {
 
 	@Size(max = 500, message = "O atributo texto deve conter no máximo 500 caracteres!")
 	private String texto;
+	
+	@Column(columnDefinition = "integer default 0")
+	private int curtir;
 
 	@NotNull
 	@Positive
@@ -88,6 +92,14 @@ public class Produto {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public int getCurtir() {
+		return curtir;
+	}
+
+	public void setCurtir(int curtir) {
+		this.curtir = curtir;
 	}
 
 	
